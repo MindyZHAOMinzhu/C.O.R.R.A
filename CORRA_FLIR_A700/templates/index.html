@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream Feed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Live Stream Feed</h1>
+    </header>
+    <div class="container">
+        <div class="video-container">
+            <!-- Live Video Stream -->
+            <img id="liveVideo" src="{{ url_for('video_feed') }}" autoplay></img>
+            <!-- Container for face circles -->
+            <div id="person-circles"></div>
+        </div>
+    </div>
+    <div class="button-container">
+        <a href="{{ url_for('narcan_video') }}" class="button">Watch Preloaded Video</a>
+        <!-- Add the alarm button here -->
+        <button id="alarmButton" class="button" disabled>Stop Alarm</button>
+    </div>
+    <!-- Add the death sound here -->
+    <audio id="deathSound" src="{{ url_for('static', filename='alarm.wav') }}" preload="auto"></audio>
+    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

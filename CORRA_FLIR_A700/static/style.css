@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #87CEEB, #ffffff);
+    margin: 0;
+    font-family: 'Baloo 2', cursive;
+}
+
+header {
+    background: #005bac;
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 5px solid #ffcc00;
+}
+
+header h1 {
+    color: #ffcc00;
+    margin: 0;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.video-container {
+    position: relative;
+    border: 5px solid #005bac;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 10px;
+    width: 80%; 
+    max-width: 800px; 
+    margin: 20px auto; /* Center the container horizontally and add vertical spacing */
+    max-height: 60vh; /* Limit the height to 60% of the viewport height */
+    display: flex;
+    justify-content: center; /* Center the video horizontally */
+    align-items: center; /* Center the video vertically */
+}
+
+#liveVideo {
+    max-width: 100%;  /* Ensure the live video does not exceed the container width */
+    max-height: 100%; /* Ensure the live video does not exceed the container height */
+    object-fit: contain; /* Maintain aspect ratio and fit within the container */
+    border-radius: 10px; /* Consistent border radius */
+    z-index: 10; 
+}
+
+.video-container img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.narcan-container {
+    position: relative;
+    width: 80%; /* Adjusted to match the width of the video container */
+    max-width: 800px; /* Maximum width of the Narcan video */
+    margin: 20px auto; /* Center the container horizontally and add vertical spacing */
+    padding: 10px; /* Padding around the Narcan video */
+    background-color: #ffffff; /* Background color for the container */
+    border: 5px solid #005bac; /* Border around the container */
+    border-radius: 10px; /* Rounded corners for the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for a 3D effect */
+    overflow: hidden; /* Ensures that the video does not overflow out of the container */
+    max-height: 60vh; /* Limit the container height to 60% of the viewport height */
+    display: flex;
+    justify-content: center; /* Center the video horizontally */
+    align-items: center; /* Center the video vertically */
+}
+
+#narcanVideo {
+    max-width: 100%;  /* Ensure the Narcan video does not exceed the container width */
+    max-height: 100%; /* Ensure the Narcan video does not exceed the container height */
+    object-fit: contain; /* Maintain aspect ratio while fitting within the dimensions */
+    border-radius: 10px; /* Consistent border radius */
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button {
+    background: #005bac;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background 0.3s ease, transform 0.3s ease; /* Add transition for background and transform */
+}
+
+.button:hover {
+    background-color: #003d8c; /* Darker shade on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+.button:active {
+    background-color: #002f6c; /* Even darker shade on active */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Lighter shadow on click */
+}
+
+.button:disabled {
+    background-color: #9faab2; /* Disabled button color */
+    box-shadow: none; /* No shadow for disabled button */
+    cursor: not-allowed; /* Indicate that the button is not clickable */
+}
+
+.blinking-border {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { border: 10px solid red; }
+    50% { border: 10px solid white; }
+    100% { border: 10px solid red; }
+}
+
+.overlay {
+    position: absolute;
+    top: -60px; /* Adjust this value to position it above the death box */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7); /* Adjust background and text color as needed */
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.2em;
+    text-align: center;
+    display: none; /* Initially hide overlay */
+}
+
+.overlay.active {
+    display: block; /* Show overlay when active */
+}
+
+.overlay button {
+    margin: 5px;
+    padding: 8px 15px; /* Adjust button size */
+    background-color: #ff0000; /* Adjust button styles */
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 5px; /* Match button border radius */
+    font-size: 1em;
+    font-weight: bold; /* Bold text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for overlay buttons */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+.overlay button:hover {
+    background-color: #cc0000; /* Darker shade on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+
+.overlay button:active {
+    background-color: #990000; /* Even darker shade on active */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Lighter shadow on click */
+}
+
