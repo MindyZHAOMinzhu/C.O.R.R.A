@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from frame_capture import frame_queue
+from frame_capture import frame_queue # import variable
 from face_detection import detect_face_and_roi
 from collections import deque
 from matplotlib import pyplot as plt
@@ -9,14 +9,17 @@ import time
 import dlib
 
 # Paths and model initialization
-predictor_path = r"C:\Users\Lenovo\source\repos\NaloxSAVER_FLIR_A700\thermal_testing\shape_predictor_68_face_landmarks.dat"
-predictor = dlib.shape_predictor(predictor_path)
+# predictor_path = r"C:\Users\Lenovo\source\repos\NaloxSAVER_FLIR_A700\thermal_testing\shape_predictor_68_face_landmarks.dat"
+PREDICTOR_PATH = "https://github.com/italojs/facial-landmarks-recognition/raw/refs/heads/master/shape_predictor_68_face_landmarks.dat"
+predictor = dlib.shape_predictor(PREDICTOR_PATH) # train own custom dlib shape predictor | standard 68-face-landmark scheme
 detector = dlib.get_frontal_face_detector()
 
 # Global variable for full-screen toggle
 full_screen = False
 
 # Initialize variables for overlay and plotting
+# What they for? Each deque keeps track of up to 50 recent intensity (or temperature) values for the mouth and nose
+# only store the max tem data points
 mouth_intensity_history = deque(maxlen=50)
 nose_intensity_history = deque(maxlen=50)  # Track intensity for the nose region
 
@@ -42,9 +45,13 @@ def update_plot(frame):
     return line_mouth, line_nose
 
 # Disable caching to suppress warning
-ani = FuncAnimation(fig, update_plot, init_func=init_plot, blit=True, cache_frame_data=False)
+# For what: FuncAnimation continuously calls update_plot (by default, every few milliseconds or every new figure update).
+ani = FuncAnimation(fig, update_plot, 
+                    init_func=init_plot, 
+                    blit=True, 
+                    cache_frame_data=False)
 
-# Function to convert pixel intensity to temperature
+# Function to convert pixel intensity to temperature (from visuals to temperature)
 def pixel_to_temperature(pixel_value, min_temp=20.0, max_temp=40.0):
     return min_temp + (pixel_value / 255) * (max_temp - min_temp)
 
@@ -53,9 +60,11 @@ nostril_positions_left = deque(maxlen=5)  # Hold up to 5 recent positions for le
 nostril_positions_right = deque(maxlen=5)  # Hold up to 5 recent positions for right nostril
 
 def detect_nostrils_and_mouth(image):
+    # convert colorized images to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    faces = detector(gray)
-    for face in faces:
+
+    faces = detector(gray) # detect all faces
+    for face in faces: # for each face, Landmark Overlays
         landmarks = predictor(gray, face)
 
         # Mouth points for tracking
@@ -122,10 +131,14 @@ def display_frames(face_detector, delay=0.05, detection_interval=5):
 
     while True:
         if frame_queue:
+            
+            # TO Acquire Thermal Frames
             frame_count += 1
-            image_data = frame_queue.popleft()
+            image_data = frame_queue.popleft() # get image data
+            
+            # normalized_thermal will be an 8-bit grayscale image
             normalized_image = cv2.normalize(image_data, None, 0, 255, cv2.NORM_MINMAX).astype(np.uint8)
-            colored_image = cv2.applyColorMap(normalized_image, cv2.COLORMAP_INFERNO)
+            colored_image = cv2.applyColorMap(normalized_image, cv2.COLORMAP_INFERNO) #  apply a color map (e.g., cv2.COLORMAP_INFERNO)
 
             # Detect and mark mouth and nose in the frame
             marked_image = detect_nostrils_and_mouth(colored_image)
